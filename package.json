@@ -1,6 +1,6 @@
 {
   "name": "laravel-elixir-myth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Laravel Elixir Myth Extension",
   "main": "index.js",
   "scripts": {

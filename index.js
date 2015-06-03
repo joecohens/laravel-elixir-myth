@@ -8,19 +8,17 @@ var gulp = require('gulp'),
     notification = require('laravel-elixir/ingredients/commands/Notification');
 
 elixir.extend('myth', function (src, options) {
+    var config = this;
 
-    var config = this,
-        defaultOptions = {
-            debug: ! config.production,
-            srcDir: config.assetsDir + 'css',
-            output: config.cssOutput
-        };
+    options = _.extend({
+        debug: ! config.production,
+        srcDir: config.assetsDir + 'css',
+        output: config.cssOutput
+    }, options);
 
-    options = _.extend(defaultOptions, options);
     src = "./" + utilities.buildGulpSrc(src, options.srcDir);
 
     gulp.task('myth', function () {
-
         var onError = function(e) {
             new notification().error(e, 'Myth Compilation Failed!');
             this.emit('end');
