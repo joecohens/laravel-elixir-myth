@@ -1,37 +1,48 @@
 var gulp = require('gulp'),
     myth = require('gulp-myth'),
-    gulpIf = require('gulp-if'),
-    uglify = require('gulp-uglify'),
     _ = require('underscore'),
-    elixir = require('laravel-elixir'),
-    utilities = require('laravel-elixir/ingredients/commands/Utilities'),
-    notification = require('laravel-elixir/ingredients/commands/Notification');
+    elixir = require('laravel-elixir');
 
-elixir.extend('myth', function (src, options) {
-    var config = this;
+var $ = Elixir.Plugins;
+var config = Elixir.config;
 
+Elixir.extend('myth', function (src, options) {
     options = _.extend({
-        debug: ! config.production,
-        srcDir: config.assetsDir + 'css',
-        output: config.cssOutput
+        debug:     ! config.production,
+        srcDir:    config.get('assets.css.folder'),
+        outputDir: config.get('public.css.outputFolder'),
     }, options);
 
-    src = "./" + utilities.buildGulpSrc(src, options.srcDir);
+    var paths = prepGulpPaths(src, options.srcDir, outputDir);
 
-    gulp.task('myth', function () {
-        var onError = function(e) {
-            new notification().error(e, 'Myth Compilation Failed!');
-            this.emit('end');
-        };
+    this.log(paths.src, paths.output);
 
-        return gulp.src(src)
-            .pipe(myth(options)).on('error', onError)
-            .pipe(gulpIf(! options.debug, uglify()))
-            .pipe(gulp.dest(options.output))
-            .pipe(new notification().message('Myth Compiled!'));
-    });
+    new Elixir.Task('myth', function () {
+        return (
+            gulp.src(src)
+                .pipe(myth(options))
+                .on('error', function(e) {
+                    new Elixir.Notification('Webpack Compilation Failed!');
 
-    this.registerWatcher('myth', options.srcDir + '/**/*.css');
-
-    return this.queueTask('myth');
+                    this.emit('end');
+                })
+                .pipe($.if(! options.debug, $.uglify()))
+                .pipe(gulp.dest(paths.output.baseDir))
+                .pipe(new Elixir.Notification('Webpack Compiled!'))
+        );
+    })
+    .watch(config.get('assets.css.folder') + '/**/*.css');
 });
+
+/**
+ * Prep the Gulp src and output paths.
+ *
+ * @param {string|array} src
+ * @param {string|null}  baseDir
+ * @param {string|null}  output
+ */
+var prepGulpPaths = function(src, baseDir, output) {
+    return new Elixir.GulpPaths()
+        .src(src, baseDir)
+        .output(output, 'app.css');
+};

@@ -1,6 +1,6 @@
 {
   "name": "laravel-elixir-myth",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Laravel Elixir Myth Extension",
   "main": "index.js",
   "scripts": {
@@ -17,11 +17,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "gulp-if": "^1.2.5",
-    "gulp-notify": "^2.0.0",
     "gulp-myth": "^1.0.3",
-    "gulp-uglify": "^1.0.1",
-    "underscore": "^1.7.0"
+    "laravel-elixir": "^3.0",
+    "underscore": "^1.8.3"
   },
   "repository": {
     "type": "git",
