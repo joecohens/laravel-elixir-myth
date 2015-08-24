@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     myth = require('gulp-myth'),
     _ = require('underscore'),
-    elixir = require('laravel-elixir');
+    Elixir = require('laravel-elixir');
 
 var $ = Elixir.Plugins;
 var config = Elixir.config;
