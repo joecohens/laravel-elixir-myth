@@ -13,11 +13,11 @@ Elixir.extend('myth', function (src, options) {
         outputDir: config.get('public.css.outputFolder'),
     }, options);
 
-    var paths = prepGulpPaths(src, options.srcDir, outputDir);
-
-    this.log(paths.src, paths.output);
+    var paths = prepGulpPaths(src, options.srcDir, options.outputDir);
 
     new Elixir.Task('myth', function () {
+        this.log(paths.src, paths.output);
+        
         return (
             gulp.src(src)
                 .pipe(myth(options))
