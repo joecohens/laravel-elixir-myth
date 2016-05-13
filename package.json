@@ -1,10 +1,10 @@
 {
   "name": "laravel-elixir-myth",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Laravel Elixir Myth Extension",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd elixir-test-app && mocha test --timeout=5000"
   },
   "keywords": [
     "laravel",
@@ -17,9 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "gulp-myth": "^1.0.3",
-    "laravel-elixir": "^3.0",
-    "underscore": "^1.8.3"
+    "gulp-myth": "^1.1.0"
   },
   "repository": {
     "type": "git",
@@ -28,5 +26,13 @@
   "bugs": {
     "url": "https://github.com/joecohens/laravel-elixir-myth/issues"
   },
-  "homepage": "https://github.com/joecohens/laravel-elixir-myth"
+  "homepage": "https://github.com/joecohens/laravel-elixir-myth",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "rimraf": "^2.4.2",
+    "laravel-elixir": "^4.0.0||^5.0.0",
+    "underscore": "^1.8.3"
+  }
 }
